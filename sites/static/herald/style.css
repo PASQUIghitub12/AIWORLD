@@ -1,0 +1,106 @@
+/* The Zyphoran Herald - newspaper stylesheet (no JavaScript) */
+
+:root {
+    --ink: #1a1712;
+    --dim: #6b6355;
+    --paper: #f3efe4;
+    --panel: #fbf8f0;
+    --line: #d8cfba;
+    --accent: #8a1c1c;
+    --wrap: 900px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Segoe UI", system-ui, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover, a:focus { text-decoration: underline; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: 10px 16px; }
+.skip-link:focus { left: 8px; top: 8px; }
+
+.masthead {
+    background: #201a10;
+    color: #f6efe0;
+    border-bottom: 6px double var(--accent);
+    padding: 22px 0 18px;
+    text-align: center;
+}
+
+.logo {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #f6efe0;
+}
+
+.kicker { margin: 4px 0 0; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #cbb892; }
+
+.site-nav { background: var(--panel); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; gap: 24px; padding: 10px 0; font-weight: 600; }
+.nav-inner a { color: #2a2318; }
+
+.netbar { background: #ebe4d3; border-bottom: 1px solid var(--line); font-size: 13px; }
+.netbar-inner { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 8px 0; align-items: center; }
+.netbar-label { color: var(--dim); }
+.net-active { color: var(--accent); }
+.netbar a { color: #3a3222; }
+
+.content { padding: 26px 0 48px; }
+
+h1 { font-family: var(--serif); font-size: 2.1rem; margin: 0 0 8px; }
+h2 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 6px; }
+
+.deck { color: var(--dim); max-width: 62ch; }
+
+.stories { list-style: none; margin: 18px 0; padding: 0; }
+.story { padding: 16px 0; border-top: 1px solid var(--line); }
+.story:first-child { border-top: 3px solid var(--ink); }
+.story h2 a { color: var(--ink); }
+.byline { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
+
+.lead { font-size: 1.1rem; }
+.dateline { font-size: 12px; letter-spacing: 0.16em; color: var(--accent); font-weight: 700; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; margin: 22px 0; }
+.record { margin: 0; }
+.record dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); margin-top: 8px; }
+.record dd { margin: 2px 0 0; font-weight: 600; }
+
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li { display: flex; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.timeline li:last-child { border-bottom: 0; }
+.year { flex: 0 0 70px; font-family: ui-monospace, Consolas, monospace; font-weight: 700; color: var(--accent); }
+
+.chip-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 14px 0; }
+.chip { background: #efe8d6; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 14px; }
+.chip-count { color: var(--accent); }
+
+.entity-list { list-style: none; margin: 16px 0; padding: 0; }
+.entity-list li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.entity-list li:last-child { border-bottom: 0; }
+.kind { margin-left: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); }
+.dim { color: var(--dim); margin: 4px 0 0; font-size: 14px; }
+.empty { color: var(--dim); font-style: italic; }
+.back { margin-top: 22px; }
+
+.site-footer { background: #201a10; color: #cdbf9e; padding: 20px 0; font-size: 13.5px; }
+.site-footer p { margin: 0; }
+
+@media (max-width: 620px) {
+    .logo { font-size: 30px; }
+    h1 { font-size: 1.7rem; }
+}

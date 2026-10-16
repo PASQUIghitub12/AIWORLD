@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{% if query %}Results for {{ query }}{% else %}Farsight Search{% endif %}{% endblock %}
+
+{% block content %}
+{% if not query %}
+<p class="hint">Type a term above to search the encyclopedia, the news desk and
+   the archive across the AIWORLD net.</p>
+
+{% elif total == 0 %}
+<div class="zero">
+    <p><strong>0 results</strong> for &ldquo;{{ query }}&rdquo;.</p>
+    {% if gen_error %}
+    <p class="dim">The net could not imagine this one right now.</p>
+    {% else %}
+    <p class="dim">This does not exist in the world yet.</p>
+    {% endif %}
+</div>
+
+{% else %}
+<p class="count">About <strong>{{ total }}</strong> result{{ '' if total == 1 else 's' }}
+   for &ldquo;{{ query }}&rdquo;.</p>
+
+{% if results.entities %}
+<section class="block">
+    <h2>Articles &middot; Omnipedia</h2>
+    <ul class="results">
+        {% for e in results.entities %}
+        <li>
+            <a class="r-title" href="{{ site_url('omnipedia') }}article/{{ e.id }}">{{ e.name }}</a>
+            <span class="r-src">{{ site_url('omnipedia') }}article/{{ e.id }}</span>
+            {% if e.description %}<p class="r-desc">{{ e.description }}</p>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if results.facts %}
+<section class="block">
+    <h2>Bulletins &middot; The Zyphoran Herald</h2>
+    <ul class="results">
+        {% for f in results.facts %}
+        <li>
+            <a class="r-title" href="{{ site_url('herald') }}bulletin/{{ f.id }}">
+                {{ f.subject_name or f.subject_id }} — {{ f.predicate | humanize }}:
+                {{ f.object_name or f.value }}
+            </a>
+            <span class="r-src">{{ site_url('herald') }}bulletin/{{ f.id }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if results.events %}
+<section class="block">
+    <h2>Archive &middot; The Zyphoran Herald</h2>
+    <ul class="results">
+        {% for ev in results.events %}
+        <li>
+            <a class="r-title" href="{{ site_url('herald') }}world">{{ ev.name }}</a>
+            <span class="r-src">{{ site_url('herald') }}world</span>
+            {% if ev.description %}<p class="r-desc">{{ ev.description }}</p>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ type_name | pretty_type }}{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('home') }}">Main page</a>
+    <span aria-hidden="true">›</span>
+    <span>{{ type_name | pretty_type }}</span>
+</nav>
+
+<h1>Category: {{ type_name | pretty_type }}</h1>
+<p class="result-summary">{{ entities | length }} article{{ '' if entities | length == 1 else 's' }} in this category.</p>
+
+<ul class="article-list">
+    {% for e in entities %}
+    <li>
+        <a class="article-link" href="{{ article_url(e.id) }}">{{ e.name }}</a>
+        {% if e.description %}
+        <p class="article-snippet">{{ e.description }}</p>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

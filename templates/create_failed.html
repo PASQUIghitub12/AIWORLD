@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Could not create {{ topic }}{% endblock %}
+
+{% block content %}
+<h1>Could not create &ldquo;{{ topic }}&rdquo;</h1>
+
+<p class="notice notice-empty">
+    The World Builder could not add this to the world right now.
+    {% if error %}<span class="muted">({{ error }})</span>{% endif %}
+</p>
+
+{% if answer %}
+<section class="panel">
+    <h2>What the World Builder said</h2>
+    <p>{{ answer }}</p>
+</section>
+{% endif %}
+
+<p><a href="{{ url_for('search', q=topic) }}">Back to search</a></p>
+{% endblock %}

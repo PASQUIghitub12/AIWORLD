@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ config.SITE_NAME }}{% endblock %} &middot; {{ config.SITE_NAME }}</title>
+    <meta name="description" content="{{ config.SITE_TAGLINE }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark" aria-hidden="true">&#9788;</span>
+                <span class="brand-text">
+                    <span class="brand-name">{{ config.SITE_NAME }}</span>
+                    <span class="brand-tagline">{{ config.SITE_TAGLINE }}</span>
+                </span>
+            </a>
+
+            <form class="search-form" action="{{ url_for('search') }}" method="get" role="search">
+                <label class="visually-hidden" for="site-search">Search Omnipedia</label>
+                <input id="site-search" type="search" name="q" placeholder="Search the encyclopedia&hellip;"
+                       value="{{ request.args.get('q', '') }}" autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Primary">
+        <div class="wrap nav-inner">
+            <a href="{{ url_for('home') }}">Main page</a>
+            <a href="{{ url_for('articles') }}">All articles</a>
+            <a href="{{ url_for('events') }}">Timeline</a>
+            <a href="{{ url_for('about') }}">About</a>
+        </div>
+    </nav>
+
+    <div class="netbar">
+        <div class="wrap netbar-inner">
+            <span class="netbar-label">On the AIWORLD net:</span>
+            {% for s in sites %}
+                {% if s.slug == current_site %}
+                <strong class="net-active">{{ s.name }}</strong>
+                {% else %}
+                <a href="{{ s.url }}">{{ s.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <main id="content" class="wrap content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>Omnipedia is a fictional encyclopedia of the AIWORLD universe.
+               All content is generated from the canonical world database and
+               is not real-world information.</p>
+            <p class="muted">Runs entirely on your computer &mdash; no external
+               services, no JavaScript.</p>
+        </div>
+    </footer>
+</body>
+</html>

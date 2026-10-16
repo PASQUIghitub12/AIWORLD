@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}All articles{% endblock %}
+
+{% block content %}
+<h1>All articles</h1>
+<p class="result-summary">{{ entities | length }} article{{ '' if entities | length == 1 else 's' }} in {{ config.SITE_NAME }}.</p>
+
+{% if entities %}
+<ul class="article-list">
+    {% for e in entities %}
+    <li>
+        <a class="article-link" href="{{ article_url(e.id) }}">{{ e.name }}</a>
+        <span class="article-type">{{ e.type | pretty_type }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No articles exist yet.</p>
+{% endif %}
+{% endblock %}

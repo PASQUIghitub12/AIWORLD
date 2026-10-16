@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% set entity = data.entity %}
+{% block title %}{{ entity.name }}{% endblock %}
+
+{% block content %}
+<article class="article">
+    <header class="article-header">
+        <p class="article-category">
+            <a href="{{ url_for('category', type_name=entity.type or 'unknown') }}">
+                {{ entity.type | pretty_type }}
+            </a>
+        </p>
+        <h1>{{ entity.name }}</h1>
+        {% if entity.aliases %}
+        <p class="aliases">Also known as:
+            {% for a in entity.aliases %}<span class="alias">{{ a }}</span>{{ ', ' if not loop.last else '' }}{% endfor %}
+        </p>
+        {% endif %}
+    </header>
+
+    <div class="article-body">
+        <div class="article-main">
+            {% if entity.description %}
+            <p class="summary">{{ entity.description }}</p>
+            {% else %}
+            <p class="notice notice-stub">
+                This article has no established summary yet. Add one through
+                the World Builder.
+            </p>
+            {% endif %}
+
+            {% if data.facts %}
+            <section class="section">
+                <h2>Established facts</h2>
+                <table class="facts-table">
+                    <tbody>
+                        {% for f in data.facts %}
+                        <tr>
+                            <th scope="row">{{ f.predicate | humanize }}</th>
+                            <td>
+                                {% if f.object_id %}
+                                    <a href="{{ article_url(f.object_id) }}">{{ f.object_name or f.object_id }}</a>
+                                {% else %}
+                                    {{ f.value }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            {% endif %}
+
+            {% if data.relationships %}
+            <section class="section">
+                <h2>Relationships</h2>
+                <ul class="rel-list">
+                    {% for r in data.relationships %}
+                    <li>
+                        <span class="pred">{{ r.predicate | humanize }}</span>
+                        <a href="{{ article_url(r.object_id) }}">{{ r.object_name or r.object_id }}</a>
+                        {% if r.object_type %}<span class="article-type">{{ r.object_type | pretty_type }}</span>{% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if data.backlinks %}
+            <section class="section">
+                <h2>Referenced by</h2>
+                <ul class="rel-list">
+                    {% for b in data.backlinks %}
+                    <li>
+                        <a href="{{ article_url(b.subject_id) }}">{{ b.subject_name or b.subject_id }}</a>
+                        <span class="pred">{{ b.predicate | humanize }}</span>
+                        <span class="muted">this article</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if not entity.description and not data.facts and not data.relationships and not data.backlinks %}
+            <p class="notice notice-stub">
+                This is a stub article. No canonical facts have been recorded
+                for it yet.
+            </p>
+            {% endif %}
+        </div>
+
+        <aside class="article-sidebar" aria-label="Article information">
+            <div class="infobox">
+                <h2>{{ entity.name }}</h2>
+                <dl>
+                    <dt>Type</dt>
+                    <dd>{{ entity.type | pretty_type }}</dd>
+                    {% if entity.aliases %}
+                    <dt>Aliases</dt>
+                    <dd>{{ entity.aliases | join(', ') }}</dd>
+                    {% endif %}
+                    {% if entity.created_at %}
+                    <dt>Recorded</dt>
+                    <dd>{{ entity.created_at[:10] }}</dd>
+                    {% endif %}
+                </dl>
+                <p class="provenance muted">Canonical record &middot; {{ entity.id }}</p>
+            </div>
+
+            <div class="netbox">
+                <h3>Elsewhere on the net</h3>
+                <ul>
+                    <li><a href="{{ site_url('almanac') }}place/{{ entity.id }}">
+                        Navigator's Almanac &mdash; chart entry</a></li>
+                    <li><a href="{{ site_url('herald') }}world">
+                        The Zyphoran Herald &mdash; world desk</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</article>
+{% endblock %}

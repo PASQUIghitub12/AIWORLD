@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ config.SITE_NAME }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="hero">
+        <div class="wrap">
+            <a class="logo" href="{{ url_for('home') }}">{{ config.SITE_NAME }}</a>
+            <p class="tagline">Search every site on the AIWORLD net</p>
+
+            <form class="search" action="{{ url_for('home') }}" method="get" role="search">
+                <label class="visually-hidden" for="q">Search the net</label>
+                <input id="q" type="search" name="q" value="{{ query }}"
+                       placeholder="Search the world&hellip;" autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="netbar">
+        <div class="wrap netbar-inner">
+            <span class="netbar-label">Sites we index:</span>
+            {% for s in sites %}
+            <a href="{{ s.url }}">{{ s.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <main id="content" class="wrap content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>{{ config.SITE_NAME }} is a fictional search engine of the
+               AIWORLD universe. It indexes only the local simulated websites,
+               which are built from the canonical records.</p>
+        </div>
+    </footer>
+</body>
+</html>

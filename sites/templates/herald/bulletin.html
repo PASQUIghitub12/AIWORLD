@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ headline(fact) }}{% endblock %}
+
+{% block content %}
+<article class="story-full">
+    <p class="dateline">THE WORLD DESK</p>
+    <h1>{{ headline(fact) }}</h1>
+    <p class="byline">A desk report drawn from the canonical world records.</p>
+
+    <p class="lead">
+        According to the records, the relation
+        <strong>{{ fact.predicate | humanize }}</strong> is established for
+        {% if subject %}<a href="{{ site_url('omnipedia') }}article/{{ subject.id }}">{{ subject.name }}</a>
+        {% else %}{{ fact.subject_id }}{% endif %}
+        {% if fact.object_id %}
+            with {% if obj %}<a href="{{ site_url('omnipedia') }}article/{{ obj.id }}">{{ obj.name }}</a>{% else %}{{ fact.object_id }}{% endif %}.
+        {% else %}
+            with the value <strong>{{ fact.value }}</strong>.
+        {% endif %}
+    </p>
+
+    <section class="panel">
+        <h2>Record</h2>
+        <dl class="record">
+            <dt>Subject</dt>
+            <dd>{% if subject %}<a href="{{ site_url('omnipedia') }}article/{{ subject.id }}">{{ subject.name }}</a>{% else %}{{ fact.subject_id }}{% endif %}</dd>
+            <dt>Relation</dt>
+            <dd>{{ fact.predicate | humanize }}</dd>
+            <dt>{% if fact.object_id %}Object{% else %}Value{% endif %}</dt>
+            <dd>{% if fact.object_id %}{% if obj %}<a href="{{ site_url('omnipedia') }}article/{{ obj.id }}">{{ obj.name }}</a>{% else %}{{ fact.object_id }}{% endif %}{% else %}{{ fact.value }}{% endif %}</dd>
+        </dl>
+    </section>
+
+    <p class="back"><a href="{{ url_for('home') }}">&larr; Back to the front page</a></p>
+</article>
+{% endblock %}

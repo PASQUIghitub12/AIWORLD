@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Article not found{% endblock %}
+
+{% block content %}
+<h1>Article not found</h1>
+<div class="notice notice-empty">
+    <p>The page you asked for does not exist in {{ config.SITE_NAME }}.</p>
+    <p class="muted">It may have been mistyped, or the world may not contain an
+       entity with that identifier yet.</p>
+</div>
+
+<p>
+    <a class="button-link" href="{{ url_for('home') }}">Return to the main page</a>
+</p>
+
+<form class="search-form" action="{{ url_for('search') }}" method="get" role="search">
+    <label class="visually-hidden" for="not-found-search">Search Omnipedia</label>
+    <input id="not-found-search" type="search" name="q" placeholder="Search the encyclopedia&hellip;" autocomplete="off">
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{{ entity.name }}{% endblock %}
+
+{% block content %}
+<nav class="crumb">
+    <a href="{{ url_for('home') }}">Gazetteer</a> <span aria-hidden="true">›</span>
+    <span>{{ entity.type | humanize }}</span>
+</nav>
+
+<h1>{{ entity.name }}</h1>
+{% if entity.description %}<p class="deck">{{ entity.description }}</p>{% endif %}
+
+<div class="cols">
+    <div>
+        <section class="panel">
+            <h2>Connections</h2>
+            {% if connections %}
+            <ul class="conn">
+                {% for f in connections %}
+                <li>
+                    <span class="pred">{{ f.predicate | humanize }}</span>
+                    <a href="{{ url_for('place', entity_id=f.object_id) }}">{{ f.object_name or f.object_id }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="dim">No outgoing connections are recorded.</p>
+            {% endif %}
+
+            {% if values %}
+            <h3>Recorded values</h3>
+            <ul class="conn">
+                {% for f in values %}
+                <li><span class="pred">{{ f.predicate | humanize }}</span> <strong>{{ f.value }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if routes %}
+            <h3>Routes</h3>
+            <ul class="conn">
+                {% for r in routes %}
+                <li><span class="pred">{{ r.predicate | humanize }}</span>
+                    <a href="{{ url_for('place', entity_id=r.object_id) }}">{{ r.object_name or r.object_id }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+
+        <section class="panel">
+            <h2>Reached from</h2>
+            {% if backlinks %}
+            <ul class="conn">
+                {% for b in backlinks %}
+                <li>
+                    <a href="{{ url_for('place', entity_id=b.subject_id) }}">{{ b.subject_name or b.subject_id }}</a>
+                    <span class="pred">{{ b.predicate | humanize }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="dim">Nothing recorded leads here yet.</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <aside class="side">
+        <div class="infobox">
+            <h2>Chart entry</h2>
+            <dl>
+                <dt>Kind</dt><dd>{{ entity.type | humanize }}</dd>
+                {% if entity.aliases %}<dt>Also called</dt><dd>{{ entity.aliases | join(', ') }}</dd>{% endif %}
+            </dl>
+            <p class="prov">Canonical record &middot; {{ entity.id }}</p>
+        </div>
+        <p class="xlink">
+            <a href="{{ site_url('omnipedia') }}article/{{ entity.id }}">Read the encyclopedia article &rarr;</a>
+        </p>
+    </aside>
+</div>
+{% endblock %}

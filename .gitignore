@@ -1,0 +1,70 @@
+# ============================================================
+# AIWORLD - files that must NOT be committed
+# ============================================================
+# Everything below is either machine-generated, machine-specific or private.
+# The canonical world database is NOT kept in Git: a fresh clone creates an
+# empty world automatically (see database.init_database) and it grows as you
+# use it. No seed data is required.
+
+# ---- Python bytecode / caches ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.eggs/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- AIWORLD data (generated at runtime) ---
+# The canonical world and the resident's memory are per-machine data, not seed
+# data. A fresh clone creates them empty and grows them as you use AIWORLD.
+world.db
+world.db-journal
+world.db-wal
+world.db-shm
+resident_memory.db
+resident_memory.db-journal
+resident_memory.db-wal
+resident_memory.db-shm
+app.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# --- AIWORLD local configuration and state ---
+# aiworld_config.json stores YOUR chosen Ollama model; it is machine-specific.
+aiworld_config.json
+aiworld_config.json.tmp
+run.json
+
+# --- Local backups (world snapshots and code backups) ---
+backups/
+*.backup
+*.bak
+
+# --- Built launcher and logs ---
+AIWORLD.exe
+*.log
+
+# --- Secrets / environment files ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Editors and OS cruft ---
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store

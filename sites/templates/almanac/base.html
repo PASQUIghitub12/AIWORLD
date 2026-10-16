@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ config.SITE_NAME }}{% endblock %} &middot; {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a class="logo" href="{{ url_for('home') }}">
+                <span class="mark" aria-hidden="true">&#9873;</span> {{ config.SITE_NAME }}
+            </a>
+            <p class="tagline">{{ config.SITE_TAGLINE }}</p>
+        </div>
+    </header>
+
+    <div class="netbar">
+        <div class="wrap netbar-inner">
+            <span class="netbar-label">On the AIWORLD net:</span>
+            {% for s in sites %}
+                {% if s.slug == current_site %}
+                <strong class="net-active">{{ s.name }}</strong>
+                {% else %}
+                <a href="{{ s.url }}">{{ s.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <main id="content" class="wrap content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>{{ config.SITE_NAME }} is a fictional in-world gazetteer of the
+               AIWORLD universe. It lists only what the canon records; unknown
+               things stay unknown.</p>
+        </div>
+    </footer>
+</body>
+</html>

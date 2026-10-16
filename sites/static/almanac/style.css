@@ -1,0 +1,88 @@
+/* Navigator's Almanac - chart/explorer stylesheet (no JavaScript) */
+
+:root {
+    --ink: #10201f;
+    --dim: #5d716e;
+    --paper: #eef4f0;
+    --panel: #f8fbf8;
+    --line: #c8dbd2;
+    --accent: #0f6b5c;
+    --wrap: 980px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Segoe UI", system-ui, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+a { color: var(--accent); text-decoration: none; }
+a:hover, a:focus { text-decoration: underline; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: 10px 16px; }
+.skip-link:focus { left: 8px; top: 8px; }
+
+.topbar {
+    background: linear-gradient(135deg, #0d3b34 0%, #0f6b5c 100%);
+    color: #eafaf4;
+    padding: 20px 0;
+}
+.topbar-inner { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; }
+.logo { font-family: var(--serif); font-size: 28px; font-weight: 800; color: #eafaf4; }
+.mark { font-size: 22px; }
+.tagline { margin: 0; color: #b9e6db; font-size: 14px; }
+
+.netbar { background: #dfeee7; border-bottom: 1px solid var(--line); font-size: 13px; }
+.netbar-inner { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 8px 0; align-items: center; }
+.netbar-label { color: var(--dim); }
+.net-active { color: var(--accent); }
+.netbar a { color: #24413b; }
+
+.content { padding: 26px 0 48px; }
+h1 { font-family: var(--serif); font-size: 2rem; margin: 0 0 8px; }
+h2 { font-family: var(--serif); font-size: 1.25rem; margin: 0 0 10px; }
+h3 { font-size: 1rem; margin: 18px 0 8px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.deck { color: var(--dim); max-width: 62ch; }
+
+.crumb { font-size: 14px; color: var(--dim); margin-bottom: 8px; }
+
+.chip-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 14px 0; }
+.chip { background: #dcebe4; border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font: inherit; color: var(--ink); }
+.chip-count { color: var(--accent); font-weight: 700; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+.card { display: flex; flex-direction: column; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.card:hover { border-color: var(--accent); text-decoration: none; }
+.card-kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); }
+.card-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+.card-desc { font-size: 13.5px; color: var(--dim); }
+
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start; }
+.side { position: sticky; top: 14px; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+.conn { list-style: none; margin: 0; padding: 0; }
+.conn li { padding: 9px 0; border-bottom: 1px solid var(--line); }
+.conn li:last-child { border-bottom: 0; }
+.pred { display: inline-block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); margin-right: 8px; }
+
+.infobox { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.infobox dl { margin: 0; }
+.infobox dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); margin-top: 8px; }
+.infobox dd { margin: 2px 0 0; font-weight: 600; }
+.prov { margin: 12px 0 0; padding-top: 8px; border-top: 1px solid var(--line); font-size: 12px; color: var(--dim); font-family: ui-monospace, Consolas, monospace; word-break: break-all; }
+.xlink { margin-top: 12px; }
+
+.dim { color: var(--dim); }
+.empty { color: var(--dim); font-style: italic; }
+
+.site-footer { background: #0d3b34; color: #bfe4db; padding: 20px 0; font-size: 13.5px; }
+.site-footer p { margin: 0; }
+
+@media (max-width: 720px) {
+    .cols { grid-template-columns: minmax(0, 1fr); }
+    .side { position: static; }
+    h1 { font-size: 1.7rem; }
+}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}World desk{% endblock %}
+
+{% block content %}
+<h1>World desk</h1>
+<p class="deck">Who and what the records describe, grouped by kind.</p>
+
+{% if types %}
+<ul class="chip-list">
+    {% for t in types %}
+    <li><span class="chip">{{ t.type | humanize }} <span class="chip-count">{{ t.count }}</span></span></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if entities %}
+<ul class="entity-list">
+    {% for e in entities %}
+    <li>
+        <a href="{{ site_url('omnipedia') }}article/{{ e.id }}">{{ e.name }}</a>
+        <span class="kind">{{ e.type | humanize }}</span>
+        {% if e.description %}<p class="dim">{{ e.description }}</p>{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="empty">The world desk has nothing on file yet.</p>
+{% endif %}
+{% endblock %}

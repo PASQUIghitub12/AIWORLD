@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ config.SITE_NAME }}{% endblock %} &middot; {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="masthead">
+        <div class="wrap">
+            <a class="logo" href="{{ url_for('home') }}">{{ config.SITE_NAME }}</a>
+            <p class="kicker">{{ config.SITE_TAGLINE }}</p>
+        </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Primary">
+        <div class="wrap nav-inner">
+            <a href="{{ url_for('home') }}">Front page</a>
+            <a href="{{ url_for('world') }}">World desk</a>
+        </div>
+    </nav>
+
+    <div class="netbar">
+        <div class="wrap netbar-inner">
+            <span class="netbar-label">On the AIWORLD net:</span>
+            {% for s in sites %}
+                {% if s.slug == current_site %}
+                <strong class="net-active">{{ s.name }}</strong>
+                {% else %}
+                <a href="{{ s.url }}">{{ s.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <main id="content" class="wrap content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>{{ config.SITE_NAME }} is a fictional in-world newspaper of the
+               AIWORLD universe. Its bulletins are generated directly from the
+               canonical world records; it never invents facts.</p>
+        </div>
+    </footer>
+</body>
+</html>

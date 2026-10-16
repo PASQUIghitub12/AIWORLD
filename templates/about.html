@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<h1>About {{ config.SITE_NAME }}</h1>
+
+<p class="summary">{{ config.SITE_NAME }} is the fictional encyclopedia of the
+   AIWORLD universe. It is a purely local, offline website: everything it shows
+   comes from the canonical world database on this computer.</p>
+
+<section class="section">
+    <h2>How it works</h2>
+    <ul>
+        <li>The canonical source of truth is the SQLite database
+            <code>world.db</code>.</li>
+        <li>Articles, facts, links and categories are generated live from that
+            database on each page request.</li>
+        <li>Pages are plain server-rendered HTML and CSS &mdash; there is no
+            JavaScript anywhere on this site.</li>
+        <li>The site is read-only. It never invents facts and never writes to
+            the canon.</li>
+    </ul>
+</section>
+
+<section class="section">
+    <h2>How the world grows</h2>
+    <p>New entities, facts, relationships and events are created through the
+       World Builder, which validates every change before it is stored. As soon
+       as the World Builder records a new fact, it appears here automatically on
+       the next page load.</p>
+</section>
+
+<section class="section">
+    <h2>What is not here</h2>
+    <p>If a topic has no canonical record, {{ config.SITE_NAME }} shows nothing
+       rather than guessing. Absence of an article means the world has no
+       established information about it yet.</p>
+</section>
+{% endblock %}

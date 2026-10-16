@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Timeline{% endblock %}
+
+{% block content %}
+<h1>Timeline of events</h1>
+{% if events %}
+<ul class="timeline">
+    {% for ev in events %}
+    <li>
+        <span class="timeline-year">{{ ev.year if ev.year is not none else '—' }}</span>
+        <span class="timeline-body">
+            <strong>{{ ev.name }}</strong>
+            {% if ev.description %}<span class="muted"> — {{ ev.description }}</span>{% endif %}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No historical events have been recorded yet. The World
+   Builder can add events to the canon.</p>
+{% endif %}
+{% endblock %}

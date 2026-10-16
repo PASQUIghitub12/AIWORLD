@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Unknown place{% endblock %}
+
+{% block content %}
+<h1>Unknown place</h1>
+<p class="empty">This place is not on the chart.</p>
+<p><a href="{{ url_for('home') }}">Back to the gazetteer</a></p>
+{% endblock %}

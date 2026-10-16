@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Front page{% endblock %}
+
+{% block content %}
+<h1>Today's bulletins</h1>
+<p class="deck">Every bulletin below is generated from a canonical fact in the
+   world records. The Herald reports; it does not decide.</p>
+
+{% if facts %}
+<ul class="stories">
+    {% for f in facts %}
+    <li class="story">
+        <h2><a href="{{ url_for('bulletin', fact_id=f.id) }}">{{ headline(f) }}</a></h2>
+        <p class="byline">
+            Filed under
+            <a href="{{ url_for('world') }}">{{ f.subject_type | humanize if f.subject_type else 'World' }}</a>
+            &middot; desk report
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="empty">The newsroom has no canonical records to report yet.</p>
+{% endif %}
+
+{% if events %}
+<section class="panel">
+    <h2>From the archive</h2>
+    <ul class="timeline">
+        {% for ev in events %}
+        <li>
+            <span class="year">{{ ev.year if ev.year is not none else '—' }}</span>
+            <span><strong>{{ ev.name }}</strong>
+                {% if ev.description %}<span class="dim"> — {{ ev.description }}</span>{% endif %}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Page not found{% endblock %}
+
+{% block content %}
+<h1>Story not found</h1>
+<p class="empty">The Herald has no such story in its records.</p>
+<p><a href="{{ url_for('home') }}">Return to the front page</a></p>
+{% endblock %}

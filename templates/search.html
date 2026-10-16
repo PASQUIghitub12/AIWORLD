@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Search: {{ results.query }}{% endblock %}
+
+{% block content %}
+<h1>Search</h1>
+
+{% if not results.query %}
+<p class="empty">Type a term in the search box to look across entities, facts
+   and events in the encyclopedia.</p>
+
+{% elif total == 0 %}
+<div class="notice notice-empty">
+    <p>No results found for <strong>&ldquo;{{ results.query }}&rdquo;</strong>.</p>
+    <p class="muted">The encyclopedia only contains established canonical
+       facts. This topic may not exist in the world yet.</p>
+</div>
+
+{% else %}
+<p class="result-summary">
+    <strong>{{ total }}</strong> result{{ '' if total == 1 else 's' }} for
+    <strong>&ldquo;{{ results.query }}&rdquo;</strong>.
+</p>
+
+{% if results.entities %}
+<section class="panel">
+    <h2>Articles ({{ results.entities | length }})</h2>
+    <ul class="article-list">
+        {% for e in results.entities %}
+        <li>
+            <a class="article-link" href="{{ article_url(e.id) }}">{{ e.name }}</a>
+            <span class="article-type">{{ e.type | pretty_type }}</span>
+            {% if e.description %}
+            <p class="article-snippet">{{ e.description }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if results.facts %}
+<section class="panel">
+    <h2>Facts ({{ results.facts | length }})</h2>
+    <ul class="fact-list">
+        {% for f in results.facts %}
+        <li>
+            {% if f.subject_id %}
+            <a href="{{ article_url(f.subject_id) }}">{{ f.subject_name or f.subject_id }}</a>
+            {% else %}{{ f.subject_id }}{% endif %}
+            <span class="pred">{{ f.predicate | humanize }}</span>
+            {% if f.object_id %}
+                <a href="{{ article_url(f.object_id) }}">{{ f.object_name or f.object_id }}</a>
+            {% else %}
+                <span class="value">{{ f.value }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if results.events %}
+<section class="panel">
+    <h2>Events ({{ results.events | length }})</h2>
+    <ul class="timeline">
+        {% for ev in results.events %}
+        <li>
+            <span class="timeline-year">{{ ev.year if ev.year is not none else '—' }}</span>
+            <span class="timeline-body">
+                <strong>{{ ev.name }}</strong>
+                {% if ev.description %}<span class="muted"> — {{ ev.description }}</span>{% endif %}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

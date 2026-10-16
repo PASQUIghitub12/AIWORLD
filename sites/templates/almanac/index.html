@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Gazetteer{% endblock %}
+
+{% block content %}
+<h1>Gazetteer</h1>
+<p class="deck">Every place the records describe, and the ways between them.</p>
+
+{% if types %}
+<ul class="chip-list">
+    {% for t in types %}
+    <li><button class="chip" disabled>{{ t.type | humanize }} <span class="chip-count">{{ t.count }}</span></button></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if entities %}
+<div class="grid">
+    {% for e in entities %}
+    <a class="card" href="{{ url_for('place', entity_id=e.id) }}">
+        <span class="card-kind">{{ e.type | humanize }}</span>
+        <span class="card-name">{{ e.name }}</span>
+        {% if e.description %}<span class="card-desc">{{ e.description }}</span>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p class="empty">No places have been charted yet.</p>
+{% endif %}
+{% endblock %}
